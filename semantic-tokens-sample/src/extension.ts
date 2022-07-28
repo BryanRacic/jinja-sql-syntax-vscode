@@ -5,15 +5,12 @@ const tokenModifiers = new Map<string, number>();
 
 const legend = (function () {
 	const tokenTypesLegend = [
-		'comment', 'string', 'keyword', 'number', 'regexp', 'operator', 'namespace',
-		'type', 'struct', 'class', 'interface', 'enum', 'typeParameter', 'function',
-		'method', 'decorator', 'macro', 'variable', 'parameter', 'property', 'label'
+		'comment'
 	];
 	tokenTypesLegend.forEach((tokenType, index) => tokenTypes.set(tokenType, index));
 
 	const tokenModifiersLegend = [
-		'declaration', 'documentation', 'readonly', 'static', 'abstract', 'deprecated',
-		'modification', 'async'
+		'comment'
 	];
 	tokenModifiersLegend.forEach((tokenModifier, index) => tokenModifiers.set(tokenModifier, index));
 
@@ -21,7 +18,7 @@ const legend = (function () {
 })();
 
 export function activate(context: vscode.ExtensionContext) {
-	context.subscriptions.push(vscode.languages.registerDocumentSemanticTokensProvider({ language: 'semanticLanguage'}, new DocumentSemanticTokensProvider(), legend));
+	context.subscriptions.push(vscode.languages.registerDocumentSemanticTokensProvider({ language: 'sql'}, new DocumentSemanticTokensProvider(), legend));
 }
 
 interface IParsedToken {
@@ -71,19 +68,19 @@ class DocumentSemanticTokensProvider implements vscode.DocumentSemanticTokensPro
 			const line = lines[i];
 			let currentOffset = 0;
 			do {
-				const openOffset = line.indexOf('[', currentOffset);
+				const openOffset = line.indexOf('{#', currentOffset);
 				if (openOffset === -1) {
 					break;
 				}
-				const closeOffset = line.indexOf(']', openOffset);
+				const closeOffset = line.indexOf('#}', openOffset);
 				if (closeOffset === -1) {
 					break;
 				}
-				const tokenData = this._parseTextToken(line.substring(openOffset + 1, closeOffset));
+				const tokenData = this._parseTextToken(line.substring(openOffset, closeOffset));
 				r.push({
 					line: i,
-					startCharacter: openOffset + 1,
-					length: closeOffset - openOffset - 1,
+					startCharacter: openOffset,
+					length: closeOffset - openOffset+2,
 					tokenType: tokenData.tokenType,
 					tokenModifiers: tokenData.tokenModifiers
 				});

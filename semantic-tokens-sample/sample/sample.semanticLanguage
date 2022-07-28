@@ -17,3 +17,6 @@ Some examples:
 
 An error case:
     [notInLegend]
+
+Another case:
+    {# Hello World #}
