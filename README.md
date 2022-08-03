@@ -3,7 +3,7 @@
 ### INSTALLATION
 RUN 
 ```
-code --install-extension jinja-sql-syntax-highlighter-0.0.1vsix
+code --install-extension jinja-sql-syntax-highlighter-0.0.2vsix
 ```
 
 

@@ -2,7 +2,7 @@
 	"name": "jinja-sql-syntax-highlighter",
 	"displayName": "jinja-sql-syntax-highlighter",
 	"description": "Highlights jinja syntax in sql files",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "BryanR",
 	"private": true,
 	"license": "MIT",
@@ -14,34 +14,28 @@
 		"vscode": "^1.42.0"
 	},
 	"categories": [
-		"Other"
+		"Programming Languages"
 	],
-	"activationEvents": [
-		"onLanguage:sql"
-	],
-	"main": "./out/extension.js",
 	"contributes": {
 		"languages": [
-			{
-				"id": "sql",
-				"extensions": [
-					".sql"
-				]
-			}
-		]
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"lint": "eslint . --ext .ts,.tsx",
-		"watch": "tsc -watch -p ./"
-	},
-	"devDependencies": {
-		"@types/node": "^16.11.7",
-		"@types/vscode": "^1.42.0",
-		"@typescript-eslint/eslint-plugin": "^5.30.0",
-		"@typescript-eslint/parser": "^5.30.0",
-		"eslint": "^8.13.0",
-		"typescript": "^4.7.2"
+		  {
+			"id": "sql",
+			"extensions": [
+			  ".sql",
+			  ".dsql"
+			],
+			"aliases": [
+			  "SQL"
+			],
+			"configuration": "./language-configuration.json"
+		  }
+		],
+	"grammars": [
+		{
+		  "language": "sql",
+		  "scopeName": "source.sql",
+		  "path": "./syntaxes/sql.tmLanguage.json"
+		}
+	  ]
 	}
 }
